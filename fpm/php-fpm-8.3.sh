@@ -8,7 +8,7 @@ docroot="$5"
 
 pool_conf="[$2]
 
-listen = /run/php/php7.3-fpm-$2.sock
+listen = /run/php/php8.3-fpm-$2.sock
 listen.owner = $1
 listen.group = $1
 listen.mode = 0666
@@ -72,21 +72,9 @@ if [ -f "$pool_file_72" ]; then
     service php7.2-fpm restart
 fi
 
-write_file=0
-if [ ! -f "$pool_file_73" ]; then
-  write_file=1
-else
-  user_count=$(grep -c "/home/$1/" $pool_file_73)
-  if [ $user_count -eq 0 ]; then
-    write_file=1
-  fi
-fi
-if [ $write_file -eq 1 ]; then
-    echo "$pool_conf" > $pool_file_73
+if [ -f "$pool_file_73" ]; then
+    rm $pool_file_73
     service php7.3-fpm restart
-fi
-if [ -f "/etc/php/7.3/fpm/pool.d/www.conf" ]; then
-    rm /etc/php/7.3/fpm/pool.d/www.conf
 fi
 
 if [ -f "$pool_file_74" ]; then
@@ -109,9 +97,21 @@ if [ -f "$pool_file_82" ]; then
     service php8.2-fpm restart
 fi
 
-if [ -f "$pool_file_83" ]; then
-    rm $pool_file_83
+write_file=0
+if [ ! -f "$pool_file_83" ]; then
+  write_file=1
+else
+  user_count=$(grep -c "/home/$1/" $pool_file_83)
+  if [ $user_count -eq 0 ]; then
+    write_file=1
+  fi
+fi
+if [ $write_file -eq 1 ]; then
+    echo "$pool_conf" > $pool_file_83
     service php8.3-fpm restart
+fi
+if [ -f "/etc/php/8.3/fpm/pool.d/www.conf" ]; then
+    rm /etc/php/8.3/fpm/pool.d/www.conf
 fi
 
 if [ -f "$pool_file_84" ]; then

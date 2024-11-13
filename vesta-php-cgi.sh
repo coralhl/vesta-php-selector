@@ -23,7 +23,7 @@ fi
 a2enmod cgi
 
 echo "You can enter multiple versions through 'space'."
-echo "Enter php version/versions(for example 5.6 7.0 7.1 7.2 7.3 7.4 8.0 8.1 8.2):"
+echo "Enter php version/versions(for example 5.6 7.0 7.1 7.2 7.3 7.4 8.0 8.1 8.2 8.3 8.4):"
 read -p ">" vers
 
 for ver in $vers; do
